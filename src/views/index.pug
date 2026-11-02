@@ -1,0 +1,11 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title= title
+  body
+    h1= title
+    p= message
+    ul
+      each ep in endpoints
+        li #{ep.method} #{ep.path} - #{ep.info}
