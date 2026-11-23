@@ -1,8 +1,8 @@
 import express from 'express';
 import mediaRouter from '../routes/media-router.js';
 import userRouter from '../routes/user-router.js';
-import authRouter from './routes/auth-router.js';
-app.use('/api/auth', authRouter);
+import authRouter from '../routes/auth-router.js';
+
 
 const app = express();
 const port = 3000;
@@ -11,6 +11,7 @@ app.set('view engine', 'pug');
 app.set('views', 'src/views');
 app.use(express.json());
 app.use('/media', express.static('media'));
+app.use('/api/auth', authRouter);
 
 // ---------- Landing page ----------
 app.get('/', (req, res) => {
@@ -28,6 +29,8 @@ app.get('/', (req, res) => {
       {method: 'POST', path: '/api/users', info: 'Add a user'},
       {method: 'PUT', path: '/api/users/:id', info: 'Modify a user'},
       {method: 'DELETE', path: '/api/users/:id', info: 'Delete a user'},
+      {method: 'POST', path: '/api/auth/login', info: 'Login to the API'},
+      {method: 'GET', path: '/api/auth/me', info: 'Get authenticated user information'},
     ],
   });
 });

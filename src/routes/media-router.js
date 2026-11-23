@@ -13,4 +13,5 @@ mediaRouter.route('/:id').get(getMediaById);
 mediaRouter.route('/:id').get(getMediaById).put(putMedia);
 mediaRouter.route('/:id').get(getMediaById).put(putMedia).delete(deleteMedia);
 
+
 export default mediaRouter;

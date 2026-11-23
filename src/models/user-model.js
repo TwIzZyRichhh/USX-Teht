@@ -86,5 +86,16 @@ const removeUser = async (id) => {
     connection.release();
   }
 };
+const selectUserByUsernameAndPassword = async (user) => {
+  try {
+    const sql = `SELECT user_id, username, email, user_level_id
+                 FROM Users WHERE username = ? AND password = ?`;
+    const [rows] = await promisePool.query(sql, [user.username, user.password]);
+    return rows[0]; // undefined if no match
+  } catch (error) {
+    console.error('selectUserByUsernameAndPassword', error);
+    throw new Error('database error');
+  }
+};
 
-export {listAllUsers, findUserById, addUser, updateUser, removeUser};
+export {listAllUsers, findUserById, addUser, updateUser, removeUser, selectUserByUsernameAndPassword};
