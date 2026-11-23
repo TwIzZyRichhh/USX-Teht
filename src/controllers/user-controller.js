@@ -24,6 +24,7 @@ const getUserById = async (req, res) => {
   }
   res.json(user);
 };
+
 const postUser = async (req, res) => {
   const {username, password, email} = req.body || {};
   if (!username || !password || !email) {
@@ -40,6 +41,10 @@ const postUser = async (req, res) => {
 };
 
 const putUser = async (req, res) => {
+  // authorization: users can update only their own info
+  if (Number(req.params.id) !== req.user.user_id) {
+    return res.status(403).json({message: 'You can only update your own user info'});
+  }
   const {username, email} = req.body || {};
   if (!username || !email) {
     return res.status(400).json({message: 'Username and email are required'});
@@ -56,7 +61,12 @@ const putUser = async (req, res) => {
   }
   res.json({message: 'User updated'});
 };
+
 const deleteUser = async (req, res) => {
+  // authorization: users can delete only their own account
+  if (Number(req.params.id) !== req.user.user_id) {
+    return res.status(403).json({message: 'You can only delete your own account'});
+  }
   const result = await removeUser(req.params.id);
   if (result.error) {
     return res.status(500).json(result);

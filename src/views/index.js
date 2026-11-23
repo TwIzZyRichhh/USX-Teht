@@ -2,6 +2,7 @@ import express from 'express';
 import mediaRouter from '../routes/media-router.js';
 import userRouter from '../routes/user-router.js';
 import authRouter from '../routes/auth-router.js';
+import {notFoundHandler, errorHandler} from '../middlewares/error-handlers.js';
 
 
 const app = express();
@@ -12,6 +13,10 @@ app.set('views', 'src/views');
 app.use(express.json());
 app.use('/media', express.static('media'));
 app.use('/api/auth', authRouter);
+app.use('/api/media', mediaRouter);
+app.use('/api/users', userRouter);
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 // ---------- Landing page ----------
 app.get('/', (req, res) => {
