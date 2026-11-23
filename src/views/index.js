@@ -1,6 +1,8 @@
 import express from 'express';
 import mediaRouter from '../routes/media-router.js';
 import userRouter from '../routes/user-router.js';
+import authRouter from './routes/auth-router.js';
+app.use('/api/auth', authRouter);
 
 const app = express();
 const port = 3000;
